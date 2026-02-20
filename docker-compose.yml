@@ -1,0 +1,27 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres:15
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 4961025Ir
+      POSTGRES_DB: lesson_docker
+    ports:
+      - "5433:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+
+  api:
+    build: .
+    ports:
+      - "7777:7777"
+    depends_on:
+      - db
+    env_file:
+      - .env
+    restart: always
+
+volumes:
+  db-data:
